@@ -8,7 +8,7 @@
 
 services:
   web:
-    image: ghcr.io/alifazl3/portfolio:latest # {{IMAGE_TAG}}
+    image: ghcr.io/alifazl3/portfolio:b07ba2197b33db84fc6266d73c5f01d7044f5610 # {{IMAGE_TAG}}
     restart: unless-stopped
     expose: ["80"]
     healthcheck:
