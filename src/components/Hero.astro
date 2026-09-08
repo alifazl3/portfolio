@@ -19,7 +19,7 @@ const hue = nav.find((n) => n.id === 'home')?.hue ?? 186;
       }
     </h1>
 
-    <div class="fa" lang="fa" dir="rtl">{hero.nameFa}</div>
+    {hero.nameFa && <div class="fa" lang="fa" dir="rtl">{hero.nameFa}</div>}
 
     <div class="typer">
       <span class="f">fmt</span>.<span class="fn">Println</span>(<span class="str"

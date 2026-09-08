@@ -106,15 +106,8 @@ export const site = {
     prompt: 'ali@fazlollahi:~',
     /** the name, split into lines — the second line gets the gradient */
     lines: ['Ali', 'Fazlollahi'],
-    /**
-     * Persian name under the latin one. Flies in from the right, tears once,
-     * and is gone about two seconds later — the line it sat on stays
-     * reserved so nothing below it moves.
-     *
-     * Split by word, never by character: Persian is a connected script and
-     * per-letter spans would break the joining forms.
-     */
-    nameFa: 'علی فضل‌اللهی',
+    /** optional second-script name under the latin one; null hides it */
+    nameFa: null as string | null,
     /** cycled by the typewriter inside fmt.Println() */
     roles: [
       "I'm a backend developer",
