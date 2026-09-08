@@ -1,0 +1,27 @@
+# Production stack, deployed by Dokploy on hermes from `master`.
+#
+# The image tag below is rewritten by the `pin-image` job in
+# .github/workflows/build.yaml after every build — leave the `# {{IMAGE_TAG}}`
+# marker in place and do not pin it by hand. Traefik routes
+# alifazlollahi.com to the `web` service on port 80; TLS terminates on the
+# host nginx in front of it, so nothing here speaks HTTPS.
+
+services:
+  web:
+    image: ghcr.io/alifazl3/portfolio:latest # {{IMAGE_TAG}}
+    restart: unless-stopped
+    expose: ["80"]
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1/"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          memory: 64M
+      update_config:
+        order: start-first
+      restart_policy:
+        condition: on-failure

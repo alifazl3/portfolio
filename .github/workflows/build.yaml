@@ -1,0 +1,84 @@
+name: build and push
+
+# The server (hermes) never builds images — CI does, and Dokploy pulls
+# (hermes_vps ADR-0002). Every push to `master` runs check + build here, pushes
+# the image to GHCR tagged `:latest` and `:<sha>`, then rewrites
+# docker-compose.prod.yml to that sha and commits it. That commit fires the
+# Dokploy webhook and is what actually deploys.
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+env:
+  IMAGE: ghcr.io/alifazl3/portfolio
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      # pnpm 11 is pinned in package.json; corepack reads it from there
+      - run: corepack enable
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm check
+      - run: pnpm build
+
+  build:
+    needs: verify
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          # the host is x86-64 only
+          platforms: linux/amd64
+          push: true
+          tags: |
+            ${{ env.IMAGE }}:latest
+            ${{ env.IMAGE }}:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  # `:latest` cannot express "something changed": Dokploy would restart the
+  # image it already has and stay a commit behind. Pin the exact sha instead.
+  # The commit carries GitHub's skip token so it does not re-trigger this
+  # workflow; the deploy webhook still fires because it reacts to the push.
+  pin-image:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: rewrite the image tag to this commit
+        run: |
+          sed -i "s|\(image: ghcr.io/alifazl3/portfolio\):[^ ]* # {{IMAGE_TAG}}|\1:${{ github.sha }} # {{IMAGE_TAG}}|" docker-compose.prod.yml
+          grep 'image: ghcr' docker-compose.prod.yml
+      - name: commit if anything moved
+        run: |
+          if git diff --quiet docker-compose.prod.yml; then
+            echo "tag already at this sha — nothing to commit"
+            exit 0
+          fi
+          git config user.name  'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add docker-compose.prod.yml
+          git commit -m "chore(deploy): pin image to ${{ github.sha }} [skip ci]"
+          git pull --rebase origin master
+          git push origin HEAD:master
