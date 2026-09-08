@@ -20,12 +20,12 @@ const W = 1200;
 const H = 630;
 
 /* kept in step with src/data/site.ts by hand — this script runs rarely */
-const NAME_TOP = 'Mohsen';
-const NAME_BOTTOM = 'Serajian';
-const ROLE = 'SENIOR BACKEND ENGINEER';
+const NAME_TOP = 'Ali';
+const NAME_BOTTOM = 'Fazlollahi';
+const ROLE = 'DEVELOPER';
 /* keep under ~30 characters — the portrait starts around x=490 */
-const TAGLINE = 'Go · event-driven systems';
-const DOMAIN = 'mohsenserajian.ir';
+const TAGLINE = 'Go · real-time systems';
+const DOMAIN = 'alifazlollahi.com';
 
 /* the site's home hue */
 const ACCENT = '#3ecfe0';

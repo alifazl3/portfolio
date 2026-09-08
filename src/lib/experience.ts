@@ -7,7 +7,7 @@
  */
 
 /** First month of the first job — see `meta.workingSince` in site.ts. */
-export const CAREER_START = { year: 2018, month: 8 } as const;
+export const CAREER_START = { year: 2021, month: 9 } as const;
 
 /** Full years elapsed, counted from the starting month rather than Jan 1. */
 export function yearsOfExperience(

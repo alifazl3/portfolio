@@ -3,8 +3,8 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-  // canonical domain — serajianmohsen.ir is an alias that redirects here
-  site: 'https://mohsenserajian.ir',
+  // canonical domain — keep in sync with meta.url in src/data/site.ts
+  site: 'https://alifazlollahi.com',
   output: 'static',
   build: {
     inlineStylesheets: 'auto',

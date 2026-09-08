@@ -32,7 +32,7 @@ const personSchema = {
     addressLocality: site.meta.location.city,
     addressCountry: site.meta.location.countryCode,
   },
-  knowsLanguage: ['fa', 'en'],
+  knowsLanguage: ['fa', 'en', 'de'],
   knowsAbout: site.skills.groups.flatMap((g) => g.items).slice(0, 20),
   sameAs: site.socials.filter((s) => s.href.startsWith('http')).map((s) => s.href),
 };

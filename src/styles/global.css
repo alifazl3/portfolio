@@ -812,7 +812,7 @@ h1 .ln.g::after {
 }
 
 /* Persian name under the latin one — small, dim, revealed right-to-left.
-   inline-block so the box hugs the text and stays under "Serajian" instead
+   inline-block so the box hugs the text and stays under the surname instead
    of stretching across the hero and pushing the rtl text to the far edge. */
 .hero .fa {
   display: inline-block;

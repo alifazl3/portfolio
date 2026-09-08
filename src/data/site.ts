@@ -2,9 +2,6 @@
  * ─────────────────────────────────────────────────────────────
  *  SITE CONTENT — this is the only file you need to edit
  *  to change what the site says. Everything else is layout.
- *
- *  Values marked `TODO` are placeholders from the mockup.
- *  Replace them one section at a time.
  * ─────────────────────────────────────────────────────────────
  */
 
@@ -16,8 +13,11 @@ import { CAREER_START } from '../lib/experience';
  * caption, the contact list and the structured data — four copies that used
  * to be edited by hand and could drift apart.
  */
-const LOCATION = { city: 'Istanbul', country: 'Türkiye', countryCode: 'TR' } as const;
+const LOCATION = { city: 'Marburg', country: 'Germany', countryCode: 'DE' } as const;
 const LOCATION_LABEL = `${LOCATION.city}, ${LOCATION.country}`;
+
+const EMAIL = 'fazlolahiali@gmail.com';
+const CV_FILE = '/Ali-Fazlollahi-Resume.pdf';
 
 export interface NavItem {
   /** must match the section's DOM id */
@@ -45,7 +45,7 @@ export interface Service {
 }
 
 export interface Project {
-  /** shown above the title, e.g. "001 / SHORTS" */
+  /** shown above the title, e.g. "001 / CHAT" */
   code: string;
   title: string;
   body: string;
@@ -69,22 +69,21 @@ export interface Social {
 export const site = {
   /* ─────────── identity / <head> ─────────── */
   meta: {
-    name: 'Mohsen Serajian',
-    /* Kept to one line in the rail. "Software Engineer" is the most common
-       title on the internet; backend is what makes someone write to you —
-       and the hero typewriter already cycles the broader ones. */
-    role: 'Senior Backend Engineer',
+    name: 'Ali Fazlollahi',
+    /* Kept to one line in the rail. The hero typewriter cycles the more
+       specific ones. */
+    role: 'Developer',
     /* keep in step with `role` — it shows up in the tab, search results and
        every social card */
-    title: 'Mohsen Serajian — Senior Backend Engineer',
+    title: 'Ali Fazlollahi — Developer',
     description:
-      'Senior backend developer building Go services at the scale of millions of users — event-driven systems, real-time backends and high-throughput pipelines.',
+      'Backend developer building Go services for a video platform with 40M+ monthly users — real-time chat, media pipelines and caching layers that hold under live-event traffic.',
     // sidebar logo: rendered as ~/handle
-    handle: 'mohsen',
+    handle: 'alifazl',
     /** canonical domain — keep in sync with `site` in astro.config.mjs */
-    url: 'https://mohsenserajian.ir',
-    /** points at the canonical one; nginx 301s it */
-    aliasDomain: 'serajianmohsen.ir',
+    url: 'https://alifazlollahi.com',
+    /** a second domain that should 301 to the canonical one; null if none */
+    aliasDomain: null as string | null,
     /** shown next to the pulsing green dot in the sidebar */
     availability: 'available for work',
     location: LOCATION,
@@ -104,9 +103,9 @@ export const site = {
 
   /* ─────────── hero ─────────── */
   hero: {
-    prompt: 'mohsen@serajian:~',
+    prompt: 'ali@fazlollahi:~',
     /** the name, split into lines — the second line gets the gradient */
-    lines: ['Mohsen', 'Serajian'],
+    lines: ['Ali', 'Fazlollahi'],
     /**
      * Persian name under the latin one. Flies in from the right, tears once,
      * and is gone about two seconds later — the line it sat on stays
@@ -115,14 +114,14 @@ export const site = {
      * Split by word, never by character: Persian is a connected script and
      * per-letter spans would break the joining forms.
      */
-    nameFa: 'محسن سراجیان',
+    nameFa: 'علی فضل‌اللهی',
     /** cycled by the typewriter inside fmt.Println() */
     roles: [
       "I'm a backend developer",
+      "I'm a Go developer",
+      "I'm a full-stack developer",
       "I'm a software engineer",
-      "I'm a blockchain developer",
-      "I'm a distributed systems engineer",
-      "I'm a freelancer",
+      'I build real-time systems',
     ],
   },
 
@@ -131,16 +130,16 @@ export const site = {
      names do, and these are all from shipped work */
   ticker: [
     'Golang',
-    '3M+ users served',
-    'Event-driven systems',
-    'Blockchain',
-    '800k+ concurrent connections',
-    'Smart contracts',
-    'Domain-driven design',
+    '40M+ monthly users',
+    'Real-time systems',
+    '80k+ concurrent connections',
+    'Event-driven',
+    '25k+ requests a second',
+    'WebSocket · Kafka',
     '100k+ uploads a day',
-    'Solidity · EVM',
-    'Kafka · Kubernetes',
     'Postgres · Redis · Scylla',
+    'Docker · Kubernetes',
+    'PHP · React · WordPress',
   ],
 
   /* ─────────── about ─────────── */
@@ -153,9 +152,9 @@ export const site = {
        stale the day they change. What stays is the scale and the class of
        problem, which travel with me. */
     paragraphs: [
-      'I build backend systems that a lot of people are on the other end of. Most of my work has been on <span class="hl">high-traffic consumer platforms</span> — video, live sports, real-time messaging — where the interesting problems only show up once you have millions of users and a spike nobody scheduled.',
-      'In practice that has meant short-video pipelines taking <span class="hl">100k+ uploads a day</span>, gamification systems for <span class="hl">3M+ users</span> that have to hold the moment a match kicks off, real-time services that let a phone drive a TV across the room, and chat backends carrying <span class="hl">800k+ concurrent connections</span>. Before that, national-scale government platforms where "this cannot go down" was the entire requirement.',
-      'Go is my primary language, usually next to Postgres, Redis, Kafka and Scylla, and more recently <span class="hl">blockchain and smart-contract systems</span>. I care about domain boundaries that survive a rewrite, event-driven flows that degrade instead of collapsing, and systems dull enough to sleep through.',
+      'I build backend systems for products with a lot of people on the other end. Most of my work has been at <span class="hl">Iran\'s largest video platform</span> — video on demand, live sports, real-time chat — serving <span class="hl">40M+ monthly users</span>, where the hard problems only show up once a match kicks off and the traffic arrives all at once.',
+      'In practice that has meant a chat backend holding <span class="hl">80k+ concurrent connections</span> across web, mobile and TV, rewritten from Node.js to Go when the first version ran out of headroom; an HLS caching layer serving <span class="hl">25k+ requests a second</span> in front of the stream origin; a short-video pipeline taking <span class="hl">100k+ uploads a day</span>; and a Go + FFmpeg service that cuts clips out of live streams the moment a goal lands. I led the Go backend team that shipped most of it.',
+      'Go is my primary language, next to PostgreSQL, Redis, ScyllaDB and Kafka, with PHP and React on the web side. Since 2024 I live in Germany, where I also run the websites and IT for a language school — four WordPress sites, a digitised registration flow and an ERPNext-based HR system. I care about <span class="hl">systems that degrade instead of collapsing</span>, and about code the next person can follow.',
     ],
 
     /**
@@ -165,7 +164,7 @@ export const site = {
      * Set to null to drop the frame entirely.
      */
     photo: {
-      alt: 'Mohsen Serajian',
+      alt: 'Ali Fazlollahi',
       /** the little label in the corner of the frame */
       caption: LOCATION_LABEL,
     } as { alt: string; caption: string } | null,
@@ -173,17 +172,17 @@ export const site = {
     meta: [
       { label: 'Location', value: LOCATION_LABEL },
       { label: 'Working since', value: String(CAREER_START.year) },
-      { label: 'Languages', value: 'Persian · English' },
-      { label: 'Email', value: 'serajian.mohsen@gmail.com' },
+      { label: 'Languages', value: 'Persian · English · German' },
+      { label: 'Email', value: EMAIL },
     ] satisfies MetaItem[],
 
     /**
-     * The CV lives at `public/Mohsen-Serajian-Resume.pdf`.
+     * The CV lives at `public/Ali-Fazlollahi-Resume.pdf`.
      * To publish a new version just overwrite that one file — the filename
      * is what the visitor downloads, so keep the name the same.
      * Set `cv` to null to hide the button entirely.
      */
-    cv: { label: 'Download CV ↓', href: '/Mohsen-Serajian-Resume.pdf' } as {
+    cv: { label: 'Download CV ↓', href: CV_FILE } as {
       label: string;
       href: string;
     } | null,
@@ -202,54 +201,53 @@ export const site = {
     groups: [
       {
         label: 'Languages',
-        items: ['Go', 'TypeScript', 'JavaScript', 'SQL'],
+        items: ['Go', 'PHP', 'JavaScript', 'TypeScript', 'Node.js', 'Python', 'SQL', 'Bash'],
       },
       {
         label: 'Architecture',
         items: [
-          'Domain-Driven Design',
-          'Clean / Hexagonal',
-          'Microservices',
-          'Event-Driven Systems',
           'RESTful APIs',
           'WebSocket',
+          'Long polling',
+          'Microservices',
+          'Event-Driven Systems',
+          'Domain-Driven Design',
+          'Clean / Hexagonal',
           'Real-time & low-latency',
           'High-traffic & spike handling',
         ],
       },
       {
         label: 'Data',
-        items: ['PostgreSQL', 'Redis', 'ScyllaDB', 'Cassandra', 'MongoDB', 'MySQL'],
+        items: ['PostgreSQL', 'MySQL', 'Redis', 'ScyllaDB', 'Cassandra', 'MongoDB'],
+      },
+      {
+        label: 'Messaging',
+        items: ['Kafka', 'NATS', 'RabbitMQ'],
       },
       {
         label: 'Platform',
-        items: ['Kafka', 'Docker', 'Kubernetes', 'Linux', 'Git', 'GitLab CI', 'GitHub Actions'],
+        items: ['Docker', 'Kubernetes (HPA)', 'Nginx', 'Apache', 'Linux', 'CI/CD', 'Git'],
       },
       {
         label: 'Observability',
-        items: ['OpenTelemetry', 'Jaeger', 'Grafana'],
+        items: ['Prometheus', 'Grafana'],
       },
       {
-        label: 'Testing',
-        items: ['Unit & integration tests', 'testify', 'Mocking', 'Benchmarks', 'pprof profiling'],
+        label: 'Media',
+        items: ['HLS', 'FFmpeg', 'Headless Chromium'],
       },
       {
-        label: 'Blockchain',
-        items: [
-          'Solidity',
-          'go-ethereum',
-          'Ethereum / EVM',
-          'Event indexers',
-          'Node operations',
-          'Wallet & key management',
-          'TON',
-          'Solana',
-          'Cosmos',
-        ],
+        label: 'Frontend',
+        items: ['React', 'Next.js', 'Zustand', 'styled-components', 'SCSS'],
+      },
+      {
+        label: 'Web & CMS',
+        items: ['WordPress', 'SEO', 'ERPNext'],
       },
       {
         label: 'Leadership',
-        items: ['Technical leadership', 'Mentoring', 'Code review'],
+        items: ['Team lead', 'Mentoring', 'Code review'],
       },
     ] satisfies SkillGroup[],
   },
@@ -265,32 +263,32 @@ export const site = {
       {
         icon: '{ }',
         title: 'Backend & API Development',
-        body: 'Go services behind REST and WebSocket APIs — built so other teams can integrate without booking a meeting, and so the next person to open the code can follow it.',
-      },
-      {
-        icon: '◫',
-        title: 'System Architecture',
-        body: 'Domain boundaries, clean and hexagonal layering, and the call on what deserves its own service and which store it belongs in — Postgres, Redis, Scylla or Cassandra.',
+        body: 'Go services behind REST, WebSocket and long-polling APIs, with PHP where the product already speaks it. Written so another team can integrate from the docs alone.',
       },
       {
         icon: '⇄',
-        title: 'Event-Driven & Real-Time',
-        body: 'Kafka-backed event flows and WebSocket transports for chat, live updates and device-to-device sync, with backpressure planned rather than discovered.',
+        title: 'Real-Time & Event-Driven',
+        body: 'WebSocket transports and Kafka-backed flows for chat, presence and phone-to-TV control — state synced across instances, backpressure planned before launch rather than discovered after.',
       },
       {
         icon: '⌁',
-        title: 'High-Traffic & Performance',
-        body: 'Systems that hold when a live event starts: hot paths profiled with pprof, traces and dashboards in place before launch, capacity decided ahead of the spike instead of during it.',
+        title: 'High-Traffic & Caching',
+        body: 'Systems that hold when a live event starts: Redis caching layers at 25k+ requests a second, hot paths profiled, rate limits and autoscaling set before the spike.',
       },
       {
-        icon: '⬡',
-        title: 'Blockchain & Smart Contracts',
-        body: 'Solidity contracts, event indexers, node operations and wallet and key handling across EVM chains, TON, Solana and Cosmos.',
+        icon: '▶',
+        title: 'Video & Media Pipelines',
+        body: 'HLS manifest and segment delivery, FFmpeg clip generation from live streams, headless-Chromium thumbnail rendering — the plumbing behind a video platform.',
+      },
+      {
+        icon: '◫',
+        title: 'Full-Stack & Web',
+        body: 'React SDKs and front-ends for the services I build, plus WordPress sites, SEO and business systems for organisations that need the whole thing to just work.',
       },
       {
         icon: '◈',
         title: 'Technical Leadership',
-        body: 'Architecture reviews, mentoring and code review — a second opinion before the expensive decision, and a team that can maintain what it ships.',
+        body: 'Led a Go backend team: architecture reviews, code review, mentoring, and the call on what deserves its own service and which store it belongs in.',
       },
     ] satisfies Service[],
   },
@@ -303,52 +301,64 @@ export const site = {
        constraint and what was built. The product is context; the system is
        the work. No stack line — the list would be the same handful of names
        on every card. */
-    note: 'A selection — these are the ones with a public URL. Most of what I build never gets one.',
+    note: 'A selection. Most of it runs behind other products and never got a landing page of its own.',
     scrollHint: '↔ scroll',
     items: [
       {
-        code: '001 / SHORTS',
-        title: 'Aparat Shorts',
-        body: 'The backend behind a Reels-style short-video feed — upload, processing and delivery. Carries 100k+ uploads a day and had to stay predictable while the product shipped weekly.',
-        href: 'https://www.aparat.com/shorts',
+        code: '001 / CHAT',
+        title: 'Real-Time Chat Service',
+        body: 'Live chat for a video platform across web, iOS, Android and Android TV. Started on Node.js and Socket.IO, rewritten in Go when it ran out of headroom: 80k+ concurrent connections, sessions in ScyllaDB, Kafka syncing messages across 12 instances, autoscaled on Kubernetes.',
+        href: null,
       },
       {
-        code: '002 / GAME CLUB',
-        title: 'Game Club — Aparat Sport',
-        body: 'A gamification platform on top of live sports: scoring, predictions, quizzes, missions, leagues and rankings for 3M+ users. Event-driven on Kafka and built for the spike that lands the second a match kicks off.',
-        href: 'https://www.aparatsport.ir/',
+        code: '002 / SDK',
+        title: 'Chat SDK (React)',
+        body: 'The NPM package that plugs the chat into any of the company\'s platforms: virtualised message lists, custom reconnection logic, Zustand state and themeable styled-components. Cut integration time per platform by more than 60%.',
+        href: null,
       },
       {
         code: '003 / CAST',
         title: 'Apollo Cast',
-        body: 'A real-time service that turns a phone into a remote and a TV into a screen. WebSocket transport with device pairing and state sync, where anything past a few hundred milliseconds is felt rather than measured.',
+        body: 'A Go and PostgreSQL service that turns a phone into a remote and a TV into a screen. Speaks WebSocket, long polling and REST so that older smart TVs still work, with pluggable authentication per platform and a JS SDK for web apps.',
         href: null,
       },
       {
-        code: '004 / CHAT',
-        title: 'Chat Service',
-        body: 'Messaging across channels: chat APIs and workflows on WebSocket and event-driven patterns, holding 800k+ concurrent connections without the tail latency creeping up.',
+        code: '004 / HLS',
+        title: 'HLS Caching Layer',
+        body: 'Go and Redis in front of the stream origin: smart manifest and segment caching with per-device quality selection. Sustains 25k+ requests a second and takes most of the peak-traffic load off the origin servers.',
         href: null,
       },
       {
-        code: '005 / WISHLY',
-        title: 'Wishly',
-        body: 'My own product. Wishlists and birthday reminders — friends see what you actually want, without spoilers or duplicates, and get nudged by email or SMS a few days ahead. Three languages, Persian included.',
-        href: 'https://wishly.info',
+        code: '005 / CLIPS',
+        title: 'Clip Creator',
+        body: 'Cuts clips out of live streams the moment a goal lands. Keeps a rolling buffer of HLS segments in memory, stitches the window with FFmpeg, encodes 480p to 1080p and publishes to the CDN — stateless Go containers driven by REST, Kafka and WebSocket events.',
+        href: null,
       },
       {
-        code: '006 / GOV',
-        title: 'National education platforms',
-        body: "National-scale services for Iran's largest government organisation: financial aid, loans, registration and core administrative systems. The requirement that shaped every decision was that they cannot go down.",
-        href: null,
+        code: '006 / SHORTS',
+        title: 'Aparat Shorts',
+        body: 'Backend for a Reels-style short-video feed — upload, processing and delivery at 100k+ uploads a day, built with the frontend and product teams while the product shipped weekly.',
+        href: 'https://www.aparat.com/shorts',
+      },
+      {
+        code: '007 / GAME CLUB',
+        title: 'Game Club — Aparat Sport',
+        body: 'Gamification on top of live sports: scoring, predictions, quizzes, missions, leagues and rankings for 3M+ users, event-driven on Kafka and sized for the spike the second a match kicks off.',
+        href: 'https://www.aparatsport.ir/',
+      },
+      {
+        code: '008 / DIWAN',
+        title: 'DIWAN-Marburg Akademie',
+        body: 'Websites and IT for a German language school in Marburg and Bonn: four WordPress sites, a digitised participant registration flow, automated mailing and an ERPNext HR system. SEO up 50%+, website-driven revenue up 70%+.',
+        href: 'https://diwan-marburg.de',
       },
     ] satisfies Project[],
     /** the dashed card that closes the row — {years} is filled from CAREER_START */
     outro: {
       title: '+ plenty<br>more',
-      body: '{years} years of services that never got a landing page — internal APIs, data migrations, integrations, ops tooling. Plus <span class="hl">blockchain and crypto work an NDA keeps me from describing</span>.',
+      body: '{years} years of services that never got a landing page — thumbnail renderers, internal APIs, data migrations, ops tooling, and <span class="hl">freelance PHP and WordPress work</span>.',
       cta: 'The CV has the full list',
-      href: '/Mohsen-Serajian-Resume.pdf',
+      href: CV_FILE,
     },
   },
 
@@ -359,26 +369,20 @@ export const site = {
     links: [
       {
         label: 'Email',
-        value: 'serajian.mohsen@gmail.com',
-        href: 'mailto:serajian.mohsen@gmail.com',
+        value: EMAIL,
+        href: `mailto:${EMAIL}`,
         icon: 'mail',
       },
       {
-        label: 'Telegram',
-        value: '@mohsenserajian',
-        href: 'https://t.me/mohsenserajian',
-        icon: 'telegram',
-      },
-      {
         label: 'LinkedIn',
-        value: 'in/mohsen-serajian',
-        href: 'https://linkedin.com/in/mohsen-serajian',
+        value: 'in/fazlollahi-ali',
+        href: 'https://www.linkedin.com/in/fazlollahi-ali/',
         icon: 'linkedin',
       },
       {
         label: 'GitHub',
-        value: 'github.com/Serajian',
-        href: 'https://github.com/Serajian',
+        value: 'github.com/alifazl3',
+        href: 'https://github.com/alifazl3',
         icon: 'github',
       },
       { label: 'Location', value: LOCATION_LABEL, href: '#', icon: 'location' },
@@ -386,19 +390,18 @@ export const site = {
     /* No form: a static site can't send mail on its own, and a contact form
        that needs a third party to work is worse than an address that always
        does. */
-    lead: 'Email or Telegram is the fastest way to reach me.',
+    lead: 'Email or LinkedIn is the fastest way to reach me.',
   },
 
   /* ─────────── sidebar socials + footer ─────────── */
   socials: [
-    { title: 'GitHub', href: 'https://github.com/Serajian', icon: 'github' },
-    { title: 'LinkedIn', href: 'https://linkedin.com/in/mohsen-serajian', icon: 'linkedin' },
-    { title: 'Telegram', href: 'https://t.me/mohsenserajian', icon: 'telegram' },
-    { title: 'Email', href: 'mailto:serajian.mohsen@gmail.com', icon: 'mail' },
+    { title: 'GitHub', href: 'https://github.com/alifazl3', icon: 'github' },
+    { title: 'LinkedIn', href: 'https://www.linkedin.com/in/fazlollahi-ali/', icon: 'linkedin' },
+    { title: 'Email', href: `mailto:${EMAIL}`, icon: 'mail' },
   ] satisfies Social[],
 
   footer: {
-    left: '© 2026 Mohsen Serajian — built with too much coffee',
+    left: '© 2026 Ali Fazlollahi — built with too much coffee',
     links: [
       { label: 'Impressum', href: '#' },
       { label: 'Privacy', href: '#' },
