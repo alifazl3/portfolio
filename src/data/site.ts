@@ -345,6 +345,12 @@ export const site = {
         body: 'Websites and IT for a German language school in Marburg and Bonn: four WordPress sites, a digitised participant registration flow, automated mailing and an ERPNext HR system. SEO up 50%+, website-driven revenue up 70%+.',
         href: 'https://diwan-marburg.de',
       },
+      {
+        code: '009 / MENU.GOLD',
+        title: 'menu.gold',
+        body: 'A restaurant SaaS built end to end: a Next.js 15 front end across ~37 routes on a Go backend with Postgres, Redis and MinIO. Digital menus, per-table QR ordering, reservations and multi-location dashboards — plus an AI import that turns a photo or PDF of a paper menu into structured categories, descriptions and allergen tags.',
+        href: 'https://menu.gold/',
+      },
     ] satisfies Project[],
     /** the dashed card that closes the row — {years} is filled from CAREER_START */
     outro: {

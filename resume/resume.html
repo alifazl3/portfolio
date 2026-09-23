@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Ali Fazlollahi — Resume</title>
+<!--
+  Source for public/Ali-Fazlollahi-Resume.pdf.
+  Edit this file, then run ./build.sh to regenerate the PDF.
+
+  Only system fonts are used on purpose: headless Chrome prints as soon as the
+  document is ready, and a webfont that has not arrived yet prints as a
+  fallback with different metrics — which silently changes the page count.
+-->
+<style>
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  :root {
+    --green: #084c41;
+    --crimson: #a51c30;
+    --ink: #1a1a1a;
+    --sidebar-w: 33%;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 8.4pt;
+    line-height: 1.42;
+    color: var(--ink);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .page {
+    display: flex;
+    width: 210mm;
+    height: 297mm;
+    overflow: hidden;
+  }
+
+  /* ─────────── left column ─────────── */
+
+  .side {
+    width: var(--sidebar-w);
+    background: var(--green);
+    color: #fff;
+    padding: 5mm 7mm 4mm;
+  }
+
+  .photo {
+    width: 22mm;
+    height: 22mm;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto 3.5mm;
+    border: 1.2mm solid #fff;
+  }
+
+  .name {
+    font-size: 15pt;
+    font-weight: 600;
+    letter-spacing: 0.1px;
+    margin: 0 0 2.5mm;
+  }
+
+  .contact {
+    margin: 0 0 4.5mm;
+    padding: 0 0 0 1.5mm;
+    list-style: none;
+    font-size: 8.3pt;
+    line-height: 1.55;
+  }
+
+  .side h2 {
+    font-size: 11.5pt;
+    font-weight: 400;
+    margin: 0 0 1.2mm;
+    padding: 0;
+  }
+
+  .side h2 + .rule {
+    border: 0;
+    border-top: 0.5pt solid rgba(255, 255, 255, 0.85);
+    margin: 0 0 1.8mm;
+  }
+
+  .side ul {
+    margin: 0 0 2.2mm;
+    padding: 0 0 0 4mm;
+    font-size: 8.3pt;
+    line-height: 1.5;
+  }
+
+  .side li { margin: 0; }
+
+  .side .edu {
+    margin: 0 0 3mm;
+    padding-left: 1.5mm;
+    line-height: 1.45;
+  }
+
+  .side .edu:last-child { margin-bottom: 0; }
+
+  .side .edu .degree { display: block; }
+  .side .edu .year { display: block; }
+
+  /* ─────────── right column ─────────── */
+
+  .main {
+    width: 67%;
+    padding: 9mm 10mm 8mm 9mm;
+  }
+
+  .main h2 {
+    font-size: 14pt;
+    font-weight: 400;
+    color: var(--crimson);
+    text-align: center;
+    margin: 0 0 1.4mm;
+    letter-spacing: 0.2px;
+  }
+
+  .main h2 + .rule {
+    border: 0;
+    border-top: 0.8pt solid var(--crimson);
+    margin: 0 0 3.2mm;
+  }
+
+  .section { margin-bottom: 4.5mm; }
+
+  .lead { margin: 0; text-align: justify; }
+
+  .job-title {
+    font-size: 11.5pt;
+    color: var(--crimson);
+    margin: 0 0 0.6mm;
+  }
+
+  .employer {
+    font-weight: 700;
+    font-style: italic;
+    margin: 0;
+  }
+
+  .dates {
+    font-style: italic;
+    margin: 0 0 1.4mm;
+  }
+
+  .job-intro { margin: 0 0 2mm; }
+
+  .item { margin: 0 0 2mm; }
+
+  .item h3 {
+    font-size: 8.9pt;
+    font-weight: 700;
+    margin: 0 0 0.8mm;
+    text-decoration: underline;
+    text-underline-offset: 1.6px;
+  }
+
+  .item ul {
+    margin: 0;
+    padding: 0 0 0 4.6mm;
+  }
+
+  .item li { margin: 0 0 0.2mm; }
+
+  /* project entries carry a link rather than an underlined label */
+  .proj { margin: 0 0 2.2mm; }
+
+  .proj h3 {
+    font-size: 9.2pt;
+    font-weight: 700;
+    margin: 0 0 0.9mm;
+    text-decoration: none;
+  }
+
+  .proj h3 .url {
+    font-weight: 400;
+    font-style: italic;
+    color: var(--crimson);
+    text-decoration: none;
+  }
+
+  .proj ul {
+    margin: 0;
+    padding: 0 0 0 4.6mm;
+  }
+
+  .proj li { margin: 0 0 0.2mm; }
+
+  b { font-weight: 700; }
+
+  /* keep the printed colour, but emit a real PDF link annotation */
+  a { color: inherit; text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <aside class="side">
+    <img class="photo" src="head.jpg" alt="Ali Fazlollahi" />
+
+    <div class="name">Ali Fazlollahi</div>
+
+    <ul class="contact">
+      <li>Marburg, Germany</li>
+      <li>+49 176 31678102</li>
+      <li><a href="mailto:fazlolahiali@gmail.com">fazlolahiali@gmail.com</a></li>
+      <li><a href="https://www.linkedin.com/in/fazlollahi-ali/">linkedin.com/in/fazlollahi-ali</a></li>
+      <li><a href="https://alifazlollahi.com">alifazlollahi.com</a></li>
+    </ul>
+
+    <h2>Programming Languages</h2>
+    <hr class="rule" />
+    <ul>
+      <li>Golang (primary)</li>
+      <li>TypeScript</li>
+      <li>Javascript</li>
+      <li>PHP</li>
+      <li>SQL</li>
+    </ul>
+
+    <h2>Backend &amp; Architecture</h2>
+    <hr class="rule" />
+    <ul>
+      <li>RESTful APIs</li>
+      <li>Domain-Driven Design (DDD)</li>
+      <li>Clean / Hexagonal Architecture</li>
+      <li>Microservices Architecture</li>
+      <li>Event-Driven Systems</li>
+      <li>WebSocket &amp; Real-Time</li>
+    </ul>
+
+    <h2>Frontend</h2>
+    <hr class="rule" />
+    <ul>
+      <li>React</li>
+      <li>Next.js</li>
+    </ul>
+
+    <h2>Databases</h2>
+    <hr class="rule" />
+    <ul>
+      <li>PostgreSQL</li>
+      <li>MySQL</li>
+      <li>Redis</li>
+      <li>MongoDB</li>
+      <li>Cassandra</li>
+      <li>ScyllaDB</li>
+    </ul>
+
+    <h2>Tools &amp; DevOps</h2>
+    <hr class="rule" />
+    <ul>
+      <li>Kafka</li>
+      <li>Git</li>
+      <li>Linux</li>
+      <li>Docker</li>
+      <li>Kubernetes</li>
+      <li>MinIO</li>
+      <li>CI/CD</li>
+    </ul>
+
+    <h2>Education</h2>
+    <hr class="rule" />
+    <div class="edu">
+      <span class="degree">Bachelor of Computer Eng. IAU</span>
+      <span class="year">2023</span>
+    </div>
+
+    <h2>Languages</h2>
+    <hr class="rule" />
+    <div class="edu">
+      <span class="degree">Persian (native)</span>
+      <span class="degree">English</span>
+      <span class="degree">German</span>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <section class="section">
+      <h2>PROFILE</h2>
+      <hr class="rule" />
+      <p class="lead">
+        Senior Backend Developer with 5+ years of experience in building scalable and maintainable
+        backend systems. Proven experience delivering production-ready solutions that meet both
+        technical and business needs. Strong analytical skills, team-oriented mindset, and a
+        structured approach to solving complex problems. Looking to join a professional engineering
+        team in Germany focused on quality and long-term impact.
+      </p>
+    </section>
+
+    <section class="section">
+      <h2>PROFESSIONAL EXPERIENCE</h2>
+      <hr class="rule" />
+
+      <div class="job-title">Senior Backend Developer</div>
+      <p class="employer">Saba Idea</p>
+      <p class="dates">Jan 2021 - Present, remote</p>
+      <p class="job-intro">
+        As a Senior Backend Developer, responsible for designing, developing, and maintaining
+        large-scale backend services used by millions of users across
+        <b>Aparat (The main product of Saba Idea)</b> platforms.
+      </p>
+
+      <div class="item">
+        <h3>Aparat Shorts</h3>
+        <ul>
+          <li>Designed and implemented a short-video backend service similar to Instagram Reels and YouTube Shorts.</li>
+          <li>Collaborated with frontend and product teams to deliver performance-critical features.</li>
+          <li>100k+ uploads daily.</li>
+        </ul>
+      </div>
+
+      <div class="item">
+        <h3>Apollo Cast</h3>
+        <ul>
+          <li>Developed a real-time backend service enabling seamless interaction between mobile devices and TVs.</li>
+          <li>Implemented WebSocket-based communication to allow mobile phones to act as remote controllers and TVs as display monitors.</li>
+          <li>Focused on low-latency communication and device synchronization.</li>
+        </ul>
+      </div>
+
+      <div class="item">
+        <h3>Chat Service</h3>
+        <ul>
+          <li>Implemented a chat backend service for sharing text messages across Aparat channels.</li>
+          <li>Designed scalable APIs and messaging workflows using WebSocket and event-driven patterns.</li>
+          <li>Ensured system stability under concurrent user activity.</li>
+          <li>80k+ concurrent connections.</li>
+        </ul>
+      </div>
+
+      <div class="item">
+        <h3>Game Club (Aparat Sport)</h3>
+        <ul>
+          <li>a large-scale gamification platform serving millions of users.</li>
+          <li>Implemented scoring, prediction, quiz, mission, league, and ranking systems.</li>
+          <li>Used Kafka for event-driven processing and asynchronous workflows.</li>
+          <li>Designed systems to handle traffic spikes during live sports events.</li>
+          <li>3M+ users.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>SELECTED PROJECTS</h2>
+      <hr class="rule" />
+
+      <div class="proj">
+        <h3>menu.gold &nbsp;<a class="url" href="https://menu.gold/">menu.gold</a></h3>
+        <ul>
+          <li>Restaurant SaaS, a product of marburg.tech: digital menus, per-table QR ordering, reservations and multi-location management.</li>
+          <li>Next.js 15 App Router frontend (~37 routes) on a Go backend with PostgreSQL, Redis and MinIO.</li>
+          <li>JWT access and refresh tokens, with phone-OTP and Google sign-in.</li>
+          <li>AI menu import that turns a photo, PDF or plain text into structured categories, descriptions and allergen tags.</li>
+          <li>Live order tracking and analytics, seven branded templates, and an offline cart for network outages.</li>
+        </ul>
+      </div>
+
+      <div class="proj">
+        <h3>Personal site &nbsp;<a class="url" href="https://alifazlollahi.com">alifazlollahi.com</a></h3>
+        <ul>
+          <li>Static Astro site, built as a Docker image in GitHub Actions and deployed to a self-managed VPS behind nginx and Traefik.</li>
+          <li>Every push to master builds, pins the image to its commit, and redeploys without manual steps.</li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+</div>
+</body>
+</html>
